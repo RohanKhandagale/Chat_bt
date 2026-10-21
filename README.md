@@ -1,29 +1,27 @@
 # PyChat AI
 
-PyChat is a small AI chat app built to practise connecting a Python backend to a clean web interface. It uses Flask for the server and Groq for the AI replies.
+PyChat is a lightweight AI chat app built with Django and the Groq API. It has a responsive dark chat interface, a small Python backend, and straightforward setup so it is easy to understand and extend.
 
-The goal is to keep the project easy to run and easy to change, without adding a big framework just for the sake of it.
+## Features
 
-## What it can do
+- AI responses powered by Groq.
+- Recent conversation context sent with each request.
+- Responsive desktop and mobile interface.
+- Typing indicator, starter prompts, and new/clear chat controls.
+- API credentials loaded from a local `.env` file, not hard-coded.
+- Django CSRF protection for chat requests.
 
-- Chat with an AI model through the Groq API.
-- Keep recent messages in the current conversation so replies have context.
-- Use the chat layout on desktop, tablet, or mobile.
-- Start a fresh conversation or clear the current one.
-- Show a typing indicator while the assistant is working.
-- Keep API credentials in a local `.env` file instead of the source code.
+Conversation history currently stays in the browser tab and is not saved to a database.
 
-Conversation history currently stays in the browser tab. It is not saved to a database.
-
-## What you need
+## Requirements
 
 - Python 3.10 or newer
 - A Groq API key
-- An internet connection for AI responses
+- Internet access for AI responses
 
-## Run it locally
+## Run locally
 
-Clone the repository, then open a terminal in the project folder.
+Clone this repository and open a terminal in the project folder.
 
 ```bash
 python -m venv .venv
@@ -41,13 +39,13 @@ Activate the environment:
 source .venv/bin/activate
 ```
 
-Install the packages:
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create your local environment file:
+Create a local environment file:
 
 **Windows PowerShell**
 ```powershell
@@ -59,48 +57,59 @@ Copy-Item .env.example .env
 cp .env.example .env
 ```
 
-Open `.env` and replace `your_groq_api_key_here` with your own Groq API key. Keep that file private; it is intentionally excluded from Git.
+Edit `.env` and replace `paste_your_groq_api_key_here` with your Groq API key. The `.env` file is ignored by Git, so do not commit it or paste your real key into source files.
 
-Start the app:
+Start Django's development server:
 
 ```bash
-python app.py
+python manage.py migrate
+python manage.py runserver
 ```
 
-Then visit [http://127.0.0.1:5000](http://127.0.0.1:5000).
+Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-## Project layout
+## Project structure
 
 ```text
 Chat_bt/
-├── app.py
+├── manage.py
+├── config/
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── chat/
+│   ├── apps.py
+│   ├── urls.py
+│   └── views.py
+├── templates/index.html
+├── static/css/style.css
+├── static/js/chat.js
 ├── requirements.txt
 ├── .env.example
-├── .gitignore
-├── README.md
-├── templates/
-│   └── index.html
-└── static/
-    ├── css/
-    │   └── style.css
-    └── js/
-        └── chat.js
+└── README.md
 ```
 
-## A couple of notes
+## Configuration
 
-The default model name is set in `.env.example`. If it is unavailable for your Groq account, update `GROQ_MODEL` to a model your account supports.
+- `GROQ_API_KEY`: your private Groq API key.
+- `GROQ_MODEL`: model name available to your Groq account.
+- `DJANGO_SECRET_KEY`: Django's secret key. Use a unique, private value for deployment.
+- `DJANGO_DEBUG`: set to `false` in production.
+- `DJANGO_ALLOWED_HOSTS`: comma-separated hostnames for deployment.
+- `PORT`: optional port override; defaults to `8000`.
 
-The app sends the recent conversation to Groq when you send a message. Avoid entering passwords, private keys, or other sensitive information into the chat. The server limits each request to the latest 20 messages and caps message length.
+The default values in `.env.example` are intended for local development only. Generate a secure `DJANGO_SECRET_KEY` and configure allowed hosts before deployment.
 
-This is a starter project, not a production service. Before deploying it for other people, add rate limiting, stronger input validation, and any privacy controls your use case needs.
+## Safety notes
+
+The backend only accepts user/assistant text messages, limits the conversation to the latest 20 messages, and caps each message length. Do not enter passwords or other sensitive information into the chatbot. This starter project does not include production rate limiting or persistent chat storage.
 
 ## Built with
 
-- Python and Flask
+- Python and Django
 - Groq API
 - HTML, CSS, and JavaScript
 
 ## License
 
-This project is released under the MIT License. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
