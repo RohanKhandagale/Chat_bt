@@ -23,4 +23,4 @@ Thumbs.db
 htmlcov/
 
 # Django local database
- db.sqlite3
+db.sqlite3
