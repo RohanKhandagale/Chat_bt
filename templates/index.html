@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101114">
+  <meta name="description" content="A clean, responsive AI chat app built with Python and Groq.">
+  <title>PyChat AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">P</div>
+        <span class="brand-name">PyChat <span>AI</span></span>
+        <button class="icon-button mobile-close" id="closeSidebar" aria-label="Close sidebar">×</button>
+      </div>
+      <button class="new-chat-button" id="newChat"><span aria-hidden="true">＋</span> New chat</button>
+      <p class="side-label">YOUR SPACE</p>
+      <div class="side-note">Your conversations live in this tab. Start a new chat whenever you want a fresh start.</div>
+      <div class="sidebar-bottom">
+        <div class="status-dot"></div>
+        <span>Powered by Groq</span>
+      </div>
+    </aside>
+
+    <main class="chat-area">
+      <header class="topbar">
+        <button class="icon-button menu-button" id="openSidebar" aria-label="Open sidebar">☰</button>
+        <div class="topbar-title">Chat <span class="online-pill"><i></i> Ready</span></div>
+        <button class="clear-button" id="clearChat" title="Clear this conversation">Clear chat</button>
+      </header>
+
+      <section class="conversation" id="conversation" aria-live="polite" aria-label="Chat messages">
+        <div class="welcome" id="welcome">
+          <div class="welcome-orb" aria-hidden="true"><span>✳</span></div>
+          <p class="eyebrow">YOUR AI COMPANION</p>
+          <h1>What’s on your mind<span>?</span></h1>
+          <p class="welcome-copy">Ask a question, work through an idea, or just start a conversation.</p>
+          <div class="suggestions">
+            <button class="suggestion" data-prompt="Explain Python decorators with a simple example."><span>⌘</span><b>Learn something</b><small>Explain a tricky topic simply</small></button>
+            <button class="suggestion" data-prompt="Help me plan a small Python project for my portfolio."><span>↗</span><b>Build a project</b><small>Turn an idea into a plan</small></button>
+            <button class="suggestion" data-prompt="Review this idea and suggest ways to improve it."><span>✎</span><b>Brainstorm</b><small>Explore an idea together</small></button>
+          </div>
+        </div>
+        <div class="messages" id="messages"></div>
+      </section>
+
+      <div class="composer-wrap">
+        <form class="composer" id="chatForm">
+          <textarea id="messageInput" rows="1" maxlength="8000" placeholder="Message PyChat..." aria-label="Write your message"></textarea>
+          <div class="composer-footer">
+            <span class="composer-hint"><span>↵</span> Enter to send · Shift + Enter for a new line</span>
+            <button class="send-button" id="sendButton" type="submit" aria-label="Send message"><span>Send</span><span aria-hidden="true">↑</span></button>
+          </div>
+        </form>
+        <p class="disclaimer">PyChat can make mistakes. Double-check important information.</p>
+      </div>
+    </main>
+  </div>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+  <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
+</body>
+</html>
