@@ -11,6 +11,11 @@ const overlay = document.querySelector("#mobileOverlay");
 let conversation = [];
 let isSending = false;
 
+function getCookie(name) {
+  const cookie = document.cookie.split("; ").find((item) => item.startsWith(`${name}=`));
+  return cookie ? decodeURIComponent(cookie.split("=").slice(1).join("=")) : "";
+}
+
 function scrollToBottom() {
   const area = document.querySelector("#conversation");
   area.scrollTop = area.scrollHeight;
@@ -82,6 +87,7 @@ async function sendMessage(rawText) {
     const response = await fetch("/api/chat", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
       body: JSON.stringify({ messages: conversation })
     });
     const data = await response.json();
