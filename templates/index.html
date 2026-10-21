@@ -1,12 +1,13 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#101114">
-  <meta name="description" content="A clean, responsive AI chat app built with Python and Groq.">
+  <meta name="description" content="A clean, responsive AI chat app built with Python, Django, and Groq.">
   <title>PyChat AI</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
   <div class="app-shell">
@@ -19,19 +20,14 @@
       <button class="new-chat-button" id="newChat"><span aria-hidden="true">＋</span> New chat</button>
       <p class="side-label">YOUR SPACE</p>
       <div class="side-note">Your conversations live in this tab. Start a new chat whenever you want a fresh start.</div>
-      <div class="sidebar-bottom">
-        <div class="status-dot"></div>
-        <span>Powered by Groq</span>
-      </div>
+      <div class="sidebar-bottom"><div class="status-dot"></div><span>Powered by Groq</span></div>
     </aside>
-
     <main class="chat-area">
       <header class="topbar">
         <button class="icon-button menu-button" id="openSidebar" aria-label="Open sidebar">☰</button>
         <div class="topbar-title">Chat <span class="online-pill"><i></i> Ready</span></div>
         <button class="clear-button" id="clearChat" title="Clear this conversation">Clear chat</button>
       </header>
-
       <section class="conversation" id="conversation" aria-live="polite" aria-label="Chat messages">
         <div class="welcome" id="welcome">
           <div class="welcome-orb" aria-hidden="true"><span>✳</span></div>
@@ -46,20 +42,17 @@
         </div>
         <div class="messages" id="messages"></div>
       </section>
-
       <div class="composer-wrap">
         <form class="composer" id="chatForm">
+          {% csrf_token %}
           <textarea id="messageInput" rows="1" maxlength="8000" placeholder="Message PyChat..." aria-label="Write your message"></textarea>
-          <div class="composer-footer">
-            <span class="composer-hint"><span>↵</span> Enter to send · Shift + Enter for a new line</span>
-            <button class="send-button" id="sendButton" type="submit" aria-label="Send message"><span>Send</span><span aria-hidden="true">↑</span></button>
-          </div>
+          <div class="composer-footer"><span class="composer-hint"><span>↵</span> Enter to send · Shift + Enter for a new line</span><button class="send-button" id="sendButton" type="submit" aria-label="Send message"><span>Send</span><span aria-hidden="true">↑</span></button></div>
         </form>
         <p class="disclaimer">PyChat can make mistakes. Double-check important information.</p>
       </div>
     </main>
   </div>
   <div class="mobile-overlay" id="mobileOverlay"></div>
-  <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
+  <script src="{% static 'js/chat.js' %}" defer></script>
 </body>
 </html>
